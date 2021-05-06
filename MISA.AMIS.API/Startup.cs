@@ -7,6 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MISA.AMIS.Core.Interfaces.Repository;
+using MISA.AMIS.Core.Interfaces.Service;
+using MISA.AMIS.Core.Service;
+using MISA.AMIS.Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +36,10 @@ namespace MISA.AMIS.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MISA.AMIS.API", Version = "v1" });
             });
+            services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
