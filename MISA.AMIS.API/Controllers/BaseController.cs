@@ -15,7 +15,7 @@ namespace MISA.AMIS.API.Controllers
     {
         IBaseRepository<MISAEntity> _baseRepository;
         IBaseService<MISAEntity> _baseService;
-        string tableName = typeof(MISAEntity).Name;
+        static string tableName = typeof(MISAEntity).Name;
         public BaseController(IBaseRepository<MISAEntity> baseRepository,
         IBaseService<MISAEntity> baseService)
         {
@@ -23,7 +23,14 @@ namespace MISA.AMIS.API.Controllers
             _baseService = baseService;
         }
 
-
+        /// <summary>
+        /// Lấy ra danh sách của đối tượng
+        /// </summary>
+        /// <returns>
+        ///     - Thành công: 200 - Danh sách đối tượng
+        ///     - NoContent: 204
+        /// </returns>
+        /// Created By: NXCHIEN 07/05/2021
         [HttpGet]
         public IActionResult Get()
         {
@@ -38,7 +45,14 @@ namespace MISA.AMIS.API.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Lấy ra 1 đối tượng theo ID
+        /// </summary>
+        /// <param name="id">Mã id của đối tượng</param>
+        /// <returns>
+        ///     - Thành công: 200 - Đối tượng có mã ID như trên
+        ///     - NoContent: 204
+        /// </returns>
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
@@ -54,9 +68,15 @@ namespace MISA.AMIS.API.Controllers
             }
         }
 
-
-
-
+        /// <summary>
+        /// Thêm mới 1 đối tượng 
+        /// </summary>
+        /// <param name="entity">đối tượng cần thêm</param>
+        /// <returns>
+        ///     - Thành công: 201 - số dòng trong bảng trong DB bị ảnh hưởng
+        ///     - NoContent: 204
+        /// </returns>
+        /// Created By: NXCHIEN 07/05/2021
         [HttpPost]
         public IActionResult Post([FromBody] MISAEntity entity)
         {
@@ -71,21 +91,20 @@ namespace MISA.AMIS.API.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Sửa 1 đối tượng
+        /// </summary>
+        /// <param name="id">Mã ID của đối tượng cần sửa</param>
+        /// <param name="entity">Đối tượng cần sửa</param>
+        /// <returns>
+        ///     - Thành công: 200 - Đối tượng vừa được sửa
+        ///     - NoContent: 204
+        /// </returns>
+        /// Created By: NXCHIEN 07/05/2021
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, [FromBody] MISAEntity entity)
         {
-            // lấy tất cả property cảu đối tượng;
-            var properties = typeof(MISAEntity).GetProperties();
-            // Duyệt tất cả property của đối tượng
-            foreach (var item in properties)
-            {
-                // Kiểm tra tên của property trùng với entityId thì gán giá trị cảu property = id;
-                if (item.Name == $"{tableName}Id")
-                {
-                    item.SetValue(entity, id);
-                }
-            }
+            AssignEntityIdInEntity(id, entity);
             var rowAffects = _baseService.Update(entity);
             if (rowAffects > 0)
             {
@@ -97,14 +116,22 @@ namespace MISA.AMIS.API.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Xóa 1 đối tượng
+        /// </summary>
+        /// <param name="id">Mã ID của dối tượng muốn xóa</param>
+        /// <returns>
+        ///     - Thành công: 200 - Message thông báo xóa thành công.
+        ///     - NoContent: 204
+        /// </returns>
+        /// Created By: NXCHIEN 07/05/2021
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
             var rowAffects = _baseService.Delete(id);
             if (rowAffects > 0)
             {
-                return Ok("Xoas thanh cong");
+                return Ok(Properties.Resources.Msg_Delete_Success);
             }
             else
             {
@@ -112,11 +139,19 @@ namespace MISA.AMIS.API.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Phân trang đối tượng
+        /// </summary>
+        /// <param name="pageSize">số đối tượng trên 1 trang</param>
+        /// <param name="pageIndex">trang số bao nhiêu</param>
+        /// <returns>
+        ///     - Thành công: 200 - Danh sách đối tượng
+        ///     - NoContent: 204
+        /// </returns>
+        /// Created By: NXCHIEN 07/05/2021
         [HttpGet("Paging")]
         public IActionResult Filters(int pageSize, int pageIndex)
         {
-
             //Lấy tất cả bản ghi trong DB
             var limit = _baseRepository.GetAll().Count();
             //Kiểm tra nếu số khách trên trang hoặc vị trí trang < 1 thì trả về BadRequest
@@ -137,6 +172,27 @@ namespace MISA.AMIS.API.Controllers
             else
             {
                 return NoContent();
+            }
+        }
+
+        /// <summary>
+        /// Gán id cho 1 đối tượng
+        /// </summary>
+        /// <param name="id">Mã ID cần gán</param>
+        /// <param name="entity">Đối tượng cần gán</param>
+        /// Created By: NXCHIEN 07/05/2021
+        public static void AssignEntityIdInEntity(Guid id, MISAEntity entity)
+        {
+            // lấy tất cả property của đối tượng;
+            var properties = typeof(MISAEntity).GetProperties();
+            // Duyệt tất cả property của đối tượng
+            foreach (var item in properties)
+            {
+                // Kiểm tra tên của property trùng với entityId thì gán giá trị của property = id;
+                if (item.Name == $"{tableName}Id")
+                {
+                    item.SetValue(entity, id);
+                }
             }
         }
     }
