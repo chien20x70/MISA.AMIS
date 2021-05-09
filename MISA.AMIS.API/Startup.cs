@@ -84,6 +84,12 @@ namespace MISA.AMIS.API
 
             app.UseAuthorization();
 
+            app.UseCors(c =>
+            {
+                c.AllowAnyOrigin();
+                c.AllowAnyMethod();
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
