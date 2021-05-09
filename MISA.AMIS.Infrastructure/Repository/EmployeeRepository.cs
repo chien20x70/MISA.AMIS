@@ -49,5 +49,15 @@ namespace MISA.AMIS.Infrastructure.Repository
                 return check;
             }
         }
+
+        public string GetEmployeeCodeMax()
+        {
+            using (dbConnection = new MySqlConnection(connectionDb))
+            {               
+                var sqlCommand = $"Proc_GetEmployeeCodeMax";
+                var employeeCode = dbConnection.QueryFirstOrDefault<string>(sqlCommand, commandType: CommandType.StoredProcedure);
+                return employeeCode;
+            }
+        }
     }
 }

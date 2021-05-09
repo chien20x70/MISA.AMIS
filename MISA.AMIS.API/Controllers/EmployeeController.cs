@@ -21,5 +21,21 @@ namespace MISA.AMIS.API.Controllers
             _employeeRepository = employeeRepository;
             _employeeService = employeeService;
         }
+
+        /// <summary>
+        /// Lấy ra EmployeeCode lớn nhất trong DB
+        /// </summary>
+        /// <returns>EmployeeCode</returns>
+        /// Created By: NXCHIEN 09/05/2021
+        [HttpGet("employeeCode")]
+        public IActionResult GetCode()
+        {
+            var employeeCode = _employeeRepository.GetEmployeeCodeMax();
+            if(employeeCode != null)
+            {
+                return Ok(employeeCode);
+            }
+            return NoContent();
+        }
     }
 }

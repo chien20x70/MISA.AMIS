@@ -194,6 +194,6 @@ namespace MISA.AMIS.API.Controllers
                     item.SetValue(entity, id);
                 }
             }
-        }
+        }       
     }
 }

@@ -20,5 +20,7 @@ namespace MISA.AMIS.Core.Interfaces.Repository
         /// <returns>TRUE hoặc FALSE</returns>
         /// Created By: NXCHIEN 07/05/2021
         public bool CheckEmployeeAttributeExist(string employeeCode, Guid? employeeId, HTTPType http, string attributeValue);
+
+        public string GetEmployeeCodeMax();
     }
 }

@@ -10,7 +10,7 @@ namespace MISA.AMIS.Core.Entities
     {
         public Guid EmployeeBankId { get; set; }
         public string BankName { get; set; }
-        public string BanhNumber { get; set; }
+        public string BankNumber { get; set; }
         public string Branch { get; set; }
         public string BankCity { get; set; }
         public int Status { get; set; }
