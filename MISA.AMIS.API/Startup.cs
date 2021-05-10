@@ -33,6 +33,7 @@ namespace MISA.AMIS.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("ChienPro", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -67,6 +68,8 @@ namespace MISA.AMIS.API
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IEmployeeBankRepository, EmployeeBankRepository>();
             services.AddScoped<IEmployeeBankService, EmployeeBankService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,12 +88,13 @@ namespace MISA.AMIS.API
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors("ChienPro");
 
-            app.UseCors(c =>
-            {
-                c.AllowAnyOrigin();
-                c.AllowAnyMethod();
-            });
+            //app.UseCors(c =>
+            //{
+            //    c.AllowAnyOrigin();
+            //    c.AllowAnyMethod();
+            //});
 
             app.UseEndpoints(endpoints =>
             {

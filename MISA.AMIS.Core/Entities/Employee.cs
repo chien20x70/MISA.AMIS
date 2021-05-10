@@ -61,12 +61,13 @@ namespace MISA.AMIS.Core.Entities
         /// <summary>
         /// Số điện thoại
         /// </summary>
+        [MISARequired("")]
         public string PhoneNumber { get; set; }
 
         /// <summary>
         /// Số điện thoại cố định
         /// </summary>
-        public string PhoneStatic { get; set; }
+        public string TelephoneNumber { get; set; }
 
         /// <summary>
         /// Vị trí
@@ -77,6 +78,26 @@ namespace MISA.AMIS.Core.Entities
         /// Mã Id phòng ban
         /// </summary>
         public Guid DepartmentId { get; set; }
+
+        /// <summary>
+        /// Số tài khoản ngân hàng
+        /// </summary>
+        public string BankAccountNumber { get; set; }
+
+        /// <summary>
+        /// Tên Ngân hàng
+        /// </summary>
+        public string BankName { get; set; }
+
+        /// <summary>
+        /// Chi nhánh
+        /// </summary>
+        public string BankBranchName { get; set; }
+
+        /// <summary>
+        /// Tỉnh thành phố.
+        /// </summary>
+        public string BankProvinceName { get; set; }
 
         /// <summary>
         /// Địa chỉ

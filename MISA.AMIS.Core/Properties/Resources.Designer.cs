@@ -95,5 +95,14 @@ namespace MISA.AMIS.Core.Properties {
                 return ResourceManager.GetString("Regex_String", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /^(([^&lt;&gt;()[\]\\.,;:\s@&quot;]+(\.[^&lt;&gt;()[\]\\.,;:\s@&quot;]+)*)|(&quot;.+&quot;))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;.
+        /// </summary>
+        internal static string Regex_StringV2 {
+            get {
+                return ResourceManager.GetString("Regex_StringV2", resourceCulture);
+            }
+        }
     }
 }
