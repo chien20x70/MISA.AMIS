@@ -123,6 +123,9 @@
   <data name="Msg_IdentifyNumber_Exist" xml:space="preserve">
     <value>Số chứng minh thư đã tồn tại trên hệ thống!</value>
   </data>
+  <data name="Msg_Param_Error" xml:space="preserve">
+    <value>Tham số truyền vào không hợp lệ!</value>
+  </data>
   <data name="Msg_Phone_Exist" xml:space="preserve">
     <value>Số điện thoại đã tồn tại trên hệ thống!</value>
   </data>

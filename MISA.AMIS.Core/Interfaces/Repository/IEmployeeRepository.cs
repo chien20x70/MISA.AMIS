@@ -21,6 +21,21 @@ namespace MISA.AMIS.Core.Interfaces.Repository
         /// Created By: NXCHIEN 07/05/2021
         public bool CheckEmployeeAttributeExist(string employeeCode, Guid? employeeId, HTTPType http, string attributeValue);
 
+        /// <summary>
+        /// Lấy ra EmployeeCode lớn nhất trong DB
+        /// </summary>
+        /// <returns>EmployeeCode</returns>
+        /// Created By: NXCHIEN 09/05/2021
         public string GetEmployeeCodeMax();
+
+        /// <summary>
+        /// Lấy danh sách nhân viên có lọc
+        /// </summary>
+        /// <param name="pageSize">số lượng nhân viên / trang</param>
+        /// <param name="pageIndex">trang số bao nhiêu</param>
+        /// <param name="filter">chuỗi để lọc</param>
+        /// <returns>Danh sách nhân viên</returns>
+        /// CreatedBy: NXCHIEN (09/05/2021)
+        public Paging<Employee> GetEmployees(int pageSize, int pageIndex, string filter);        
     }
 }

@@ -79,6 +79,15 @@ namespace MISA.AMIS.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tham số truyền vào không hợp lệ!.
+        /// </summary>
+        internal static string Msg_Param_Error {
+            get {
+                return ResourceManager.GetString("Msg_Param_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Số điện thoại đã tồn tại trên hệ thống!.
         /// </summary>
         internal static string Msg_Phone_Exist {

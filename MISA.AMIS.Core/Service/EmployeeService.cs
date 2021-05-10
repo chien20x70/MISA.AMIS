@@ -20,6 +20,23 @@ namespace MISA.AMIS.Core.Service
         }
 
         /// <summary>
+        /// Lấy danh sách nhân viên có lọc
+        /// </summary>
+        /// <param name="pageSize">số lượng nhân viên / trang</param>
+        /// <param name="pageIndex">trang số bao nhiêu</param>
+        /// <param name="filter">chuỗi để lọc</param>
+        /// <returns>Danh sách nhân viên</returns>
+        /// CreatedBy: NXCHIEN (09/05/2021)
+        public Paging<Employee> GetEmployees(int pageSize, int pageIndex, string filter)
+        {
+            if (pageIndex <= 0 || pageSize <= 0)
+            {
+                throw new EmployeeExceptions(Properties.Resources.Msg_Param_Error);
+            }
+            return _employeeRepository.GetEmployees(pageSize, pageIndex, filter);
+        }
+
+        /// <summary>
         /// Validate dữ liệu riêng từng đối tượng
         /// </summary>
         /// <param name="entity">đối tượng cần validate</param>

@@ -37,5 +37,24 @@ namespace MISA.AMIS.API.Controllers
             }
             return NoContent();
         }
+
+        /// <summary>
+        /// Lấy danh sách nhân viên có lọc
+        /// </summary>
+        /// <param name="pageSize">số lượng nhân viên / trang</param>
+        /// <param name="pageIndex">trang số bao nhiêu</param>
+        /// <param name="filter">chuỗi để lọc</param>
+        /// <returns>Danh sách nhân viên</returns>
+        /// CreatedBy: NXCHIEN (09/05/2021)
+        [HttpGet("Filter")]
+        public IActionResult GetEmployees([FromQuery] int pageSize, int pageIndex, string filter)
+        {
+            var res = _employeeService.GetEmployees(pageSize, pageIndex, filter);
+            if (res.Data.Any() && res.TotalRecord != null)
+            {
+                return Ok(res);
+            }
+            return NoContent();
+        }
     }
 }
