@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using MISA.AMIS.Core.Entities;
 using MISA.AMIS.Core.Interfaces.Repository;
 using MISA.AMIS.Core.Interfaces.Service;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MISA.AMIS.API.Controllers
@@ -31,7 +34,7 @@ namespace MISA.AMIS.API.Controllers
         public IActionResult GetCode()
         {
             var employeeCode = _employeeRepository.GetEmployeeCodeMax();
-            if(employeeCode != null)
+            if (employeeCode != null)
             {
                 return Ok(employeeCode);
             }
@@ -55,6 +58,26 @@ namespace MISA.AMIS.API.Controllers
                 return Ok(res);
             }
             return NoContent();
+        }
+
+        /// <summary>
+        /// Export file excel
+        /// </summary>
+        /// <param name="pageSize">số nhân viên / trang</param>
+        /// <param name="pageIndex">Trang số bao nhiêu</param>
+        /// <param name="filter">lọc bằng chuỗi string</param>
+        /// <returns>
+        ///     - Thành công: 200
+        ///     - Lỗi server: 500
+        /// </returns>
+        [HttpGet("ExportingExcel")]
+        public IActionResult ExportingExcel(int pageSize, int pageIndex, string filter)
+        {
+            var stream = _employeeService.ExportExcel(pageSize, pageIndex, filter);
+            string excelName = $"Danh-sach-nhan-vien-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+
+            //return File(stream, "application/octet-stream", excelName);
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
     }
 }

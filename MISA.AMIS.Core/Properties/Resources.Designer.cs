@@ -97,7 +97,7 @@ namespace MISA.AMIS.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \A(?:[a-z0-9!#$%&amp;&apos;*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;&apos;*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z.
+        ///   Looks up a localized string similar to ^(([^&lt;&gt;()\\.,;:\s@&quot;]+(\.[^&lt;&gt;()\\.,;:\s@&quot;]+)*)|(&quot;.+&quot;))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$.
         /// </summary>
         internal static string Regex_String {
             get {

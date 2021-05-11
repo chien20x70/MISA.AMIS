@@ -29,7 +29,7 @@ namespace MISA.AMIS.Core.Entities
         /// <summary>
         /// Ngày sinh
         /// </summary>
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
         /// Giới tính
