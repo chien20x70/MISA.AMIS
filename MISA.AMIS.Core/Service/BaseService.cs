@@ -37,7 +37,7 @@ namespace MISA.AMIS.Core.Service
         /// <returns>Mảng danh sách đối tượng</returns>
         /// CreatedBy: NXChien (07/05/2021)
         public IEnumerable<MISAEntity> GetAll()
-        {
+        {             
             return _baseRepository.GetAll();
         }
 

@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Msg_Code_Exist" xml:space="preserve">
-    <value>Mã nhân viên đã tồn tại trên hệ thống!</value>
+    <value>Mã nhân viên đã tồn tại trên hệ thống! Vui lòng kiểm tra lại.</value>
+  </data>
+  <data name="Msg_Email_Exist" xml:space="preserve">
+    <value>Email đã được sử dụng! Vui lòng nhập Email khác.</value>
   </data>
   <data name="Msg_IdentifyNumber_Exist" xml:space="preserve">
-    <value>Số chứng minh thư đã tồn tại trên hệ thống!</value>
+    <value>Số chứng minh thư đã tồn tại trên hệ thống! Vui lòng kiểm tra lại.</value>
   </data>
   <data name="Msg_Param_Error" xml:space="preserve">
     <value>Tham số truyền vào không hợp lệ!</value>

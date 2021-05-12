@@ -44,7 +44,7 @@ namespace MISA.AMIS.Core.Entities
         /// <summary>
         /// Ngày cấp
         /// </summary>
-        public DateTime DateOfIN { get; set; }
+        public DateTime? DateOfIN { get; set; }
 
         /// <summary>
         /// Nơi cấp
@@ -77,6 +77,7 @@ namespace MISA.AMIS.Core.Entities
         /// <summary>
         /// Mã Id phòng ban
         /// </summary>
+        [MISARequired("")]
         public Guid DepartmentId { get; set; }
 
         /// <summary>

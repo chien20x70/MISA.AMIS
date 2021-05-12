@@ -8,6 +8,7 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -162,6 +163,27 @@ namespace MISA.AMIS.Core.Service
             if (checkphoneNumberExist)
             {
                 throw new EmployeeExceptions(Properties.Resources.Msg_Phone_Exist);
+            }
+
+            //Check trùng Email
+            var email = entity.Email;
+            var checkEmailExist = _employeeRepository.CheckEmployeeAttributeExist("Email", employeeId, http, email);
+            if (checkEmailExist)
+            {
+                throw new EmployeeExceptions(Properties.Resources.Msg_Email_Exist);
+            }
+
+            //Check null DateOfBirth
+            // Nếu null thì gán giá trị mặc định 01/01/1970
+            var dateOfBirth = entity.DateOfBirth;
+            var dateOfIN = entity.DateOfIN;
+            if(dateOfBirth == null)
+            {
+                entity.DateOfBirth = DateTime.Parse("01/01/1970", new CultureInfo("en-US", true));
+            }
+            if(dateOfIN == null)
+            {
+                entity.DateOfIN = DateTime.Parse("01/01/1970", new CultureInfo("en-US", true));
             }
         }
     }
