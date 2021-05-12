@@ -61,7 +61,7 @@ namespace MISA.AMIS.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mã nhân viên đã tồn tại trên hệ thống!.
+        ///   Looks up a localized string similar to Mã nhân viên đã tồn tại trên hệ thống, vui lòng kiểm tra lại..
         /// </summary>
         internal static string Msg_Code_Exist {
             get {
@@ -70,7 +70,7 @@ namespace MISA.AMIS.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Số chứng minh thư đã tồn tại trên hệ thống!.
+        ///   Looks up a localized string similar to Số chứng minh thư đã tồn tại trên hệ thống, vui lòng kiểm tra lại..
         /// </summary>
         internal static string Msg_IdentifyNumber_Exist {
             get {
