@@ -70,7 +70,7 @@ namespace MISA.AMIS.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email đã được sử dụng! Vui lòng nhập Email khác..
+        ///   Looks up a localized string similar to Email đã được sử dụng! Vui lòng điền Email khác..
         /// </summary>
         internal static string Msg_Email_Exist {
             get {
