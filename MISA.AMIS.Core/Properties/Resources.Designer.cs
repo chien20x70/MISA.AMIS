@@ -122,5 +122,14 @@ namespace MISA.AMIS.Core.Properties {
                 return ResourceManager.GetString("Regex_StringV2", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to không đúng định dạng!.
+        /// </summary>
+        internal static string Required_Error_Message {
+            get {
+                return ResourceManager.GetString("Required_Error_Message", resourceCulture);
+            }
+        }
     }
 }

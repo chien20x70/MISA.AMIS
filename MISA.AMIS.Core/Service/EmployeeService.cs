@@ -38,6 +38,7 @@ namespace MISA.AMIS.Core.Service
             var list = res.Data.ToList();
             var stream = new MemoryStream();
             using var package = new ExcelPackage(stream);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var workSheet = package.Workbook.Worksheets.Add("DANH SÁCH NHÂN VIÊN");
 
             // set độ rộng col

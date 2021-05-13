@@ -138,4 +138,7 @@
   <data name="Regex_StringV2" xml:space="preserve">
     <value>/^(([^&lt;&gt;()[\]\\.,;:\s@"]+(\.[^&lt;&gt;()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;</value>
   </data>
+  <data name="Required_Error_Message" xml:space="preserve">
+    <value>không đúng định dạng!</value>
+  </data>
 </root>

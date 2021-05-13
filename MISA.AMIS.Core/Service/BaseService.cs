@@ -151,7 +151,7 @@ namespace MISA.AMIS.Core.Service
                         var msgErrorEmail = (emailAttribute[0] as MISAEmail).MsgErrorEmail;
                         if (string.IsNullOrEmpty(msgErrorEmail.ToString()))
                         {
-                            msgErrorEmail = $"{property.Name} không đúng định dạng!";
+                            msgErrorEmail = property.Name + Properties.Resources.Required_Error_Message;
                         }
                         throw new EmployeeExceptions(msgErrorEmail);
                     }
