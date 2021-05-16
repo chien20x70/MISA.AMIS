@@ -13,7 +13,6 @@ using MISA.AMIS.Core.Interfaces.Service;
 using MISA.AMIS.Core.Service;
 using MISA.AMIS.Infrastructure.Repository;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -66,8 +65,6 @@ namespace MISA.AMIS.API
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IEmployeeService, EmployeeService>();
-            services.AddScoped<IEmployeeBankRepository, EmployeeBankRepository>();
-            services.AddScoped<IEmployeeBankService, EmployeeBankService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         }

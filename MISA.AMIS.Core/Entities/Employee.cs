@@ -1,4 +1,5 @@
 ﻿using MISA.AMIS.Core.CustomAttribute;
+using MISA.AMIS.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,27 @@ namespace MISA.AMIS.Core.Entities
         /// <summary>
         /// Giới tính
         /// </summary>
-        public int Gender { get; set; }
+        public GenderType Gender { get; set; }
+
+        public string GenderName {
+            get
+            {
+                switch (Gender)
+                {
+                    case GenderType.Female:
+                        return Properties.GenderResource.Female;
+
+                    case GenderType.Male:
+                        return Properties.GenderResource.Male;
+
+                    case GenderType.Other:
+                        return Properties.GenderResource.Other;
+
+                    default:
+                        return Properties.GenderResource.Default;
+                }
+            }
+        }
 
         /// <summary>
         /// Số chứng minh thư
@@ -79,6 +100,11 @@ namespace MISA.AMIS.Core.Entities
         /// </summary>
         [MISARequired("")]
         public Guid DepartmentId { get; set; }
+
+        /// <summary>
+        /// Tên phòng ban
+        /// </summary>
+        public string DepartmentName { get; set; }
 
         /// <summary>
         /// Số tài khoản ngân hàng

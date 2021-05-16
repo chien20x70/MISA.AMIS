@@ -33,7 +33,7 @@ namespace MISA.AMIS.API.Controllers
         [HttpGet("employeeCode")]
         public IActionResult GetCode()
         {
-            var employeeCode = _employeeRepository.GetEmployeeCodeMax();
+            var employeeCode = _employeeService.GetEmployeeCodeMax();
             if (employeeCode != null)
             {
                 return Ok(employeeCode);
@@ -78,6 +78,17 @@ namespace MISA.AMIS.API.Controllers
 
             //return File(stream, "application/octet-stream", excelName);
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
+
+        [HttpGet("EmployeeCopy")]
+        public IActionResult GetEmployeeCopy(Guid id)
+        {
+            var employee = _employeeService.GetDuplicateEmployee(id);
+            if (employee != null)
+            {
+                return Ok(employee);
+            }
+            return NoContent();
         }
     }
 }

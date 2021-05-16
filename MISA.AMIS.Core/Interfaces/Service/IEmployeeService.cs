@@ -19,6 +19,13 @@ namespace MISA.AMIS.Core.Interfaces.Service
         public Paging<Employee> GetEmployees(int pageSize, int pageIndex, string filter);
 
         /// <summary>
+        /// Lấy ra EmployeeCode lớn nhất trong DB
+        /// </summary>
+        /// <returns>EmployeeCode</returns>
+        /// Created By: NXCHIEN 09/05/2021
+        public string GetEmployeeCodeMax();
+
+        /// <summary>
         /// Export file excel
         /// </summary>
         /// <param name="pageSize">số nhân viên / trang</param>
@@ -27,5 +34,7 @@ namespace MISA.AMIS.Core.Interfaces.Service
         /// <returns>Stream</returns>
         /// CreatedBy: NXCHIEN 11/05/2021
         public Stream ExportExcel(int pageSize, int pageIndex, string filter);
+
+        public Employee GetDuplicateEmployee(Guid id);
     }
 }

@@ -37,9 +37,9 @@ namespace MISA.AMIS.Core.Service
             var res = _employeeRepository.GetEmployees(pageSize, pageIndex, filter);
             var list = res.Data.ToList();
             var stream = new MemoryStream();
-            using var package = new ExcelPackage(stream);
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            var workSheet = package.Workbook.Worksheets.Add("DANH SÁCH NHÂN VIÊN");
+            using var package = new ExcelPackage(stream);            
+            var workSheet = package.Workbook.Worksheets.Add(Properties.ExcelResource.ExcelName);
 
             // set độ rộng col
             workSheet.Column(1).Width = 5;
@@ -55,22 +55,22 @@ namespace MISA.AMIS.Core.Service
             using (var range = workSheet.Cells["A1:I1"])
             {
                 range.Merge = true;
-                range.Value = "DANH SÁCH NHÂN VIÊN";
+                range.Value = Properties.ExcelResource.ExcelName;
                 range.Style.Font.Bold = true;
                 range.Style.Font.Size = 16;
                 range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             }
 
             // style cho excel.
-            workSheet.Cells[3, 1].Value = "STT";
-            workSheet.Cells[3, 2].Value = "Mã nhân viên";
-            workSheet.Cells[3, 3].Value = "Tên nhân viên";
-            workSheet.Cells[3, 4].Value = "Giới tính";
-            workSheet.Cells[3, 5].Value = "Ngày sinh";
-            workSheet.Cells[3, 6].Value = "Chức danh";
-            workSheet.Cells[3, 7].Value = "Tên đơn vị";
-            workSheet.Cells[3, 8].Value = "Số tài khoản";
-            workSheet.Cells[3, 9].Value = "Tên ngân hàng";
+            workSheet.Cells[3, 1].Value = Properties.ExcelResource.ExcelColumnSTT;
+            workSheet.Cells[3, 2].Value = Properties.ExcelResource.ExcelColumnMNV;
+            workSheet.Cells[3, 3].Value = Properties.ExcelResource.ExcelColumnTNV;
+            workSheet.Cells[3, 4].Value = Properties.ExcelResource.ExcelColumnGT;
+            workSheet.Cells[3, 5].Value = Properties.ExcelResource.ExcelColumnNS;
+            workSheet.Cells[3, 6].Value = Properties.ExcelResource.ExcelColumnCD;
+            workSheet.Cells[3, 7].Value = Properties.ExcelResource.ExcelColumnTDV;
+            workSheet.Cells[3, 8].Value = Properties.ExcelResource.ExcelColumnSTK;
+            workSheet.Cells[3, 9].Value = Properties.ExcelResource.ExcelColumnTNH;
 
             using (var range = workSheet.Cells["A3:I3"])
             {
@@ -89,10 +89,10 @@ namespace MISA.AMIS.Core.Service
                 workSheet.Cells[i + 4, 1].Value = i + 1;
                 workSheet.Cells[i + 4, 2].Value = e.EmployeeCode;
                 workSheet.Cells[i + 4, 3].Value = e.FullName;
-                workSheet.Cells[i + 4, 4].Value = e.Gender;
-                workSheet.Cells[i + 4, 5].Value = e.DateOfBirth?.ToString("dd/MM/yyyy");
+                workSheet.Cells[i + 4, 4].Value = e.GenderName;
+                workSheet.Cells[i + 4, 5].Value = e.DateOfBirth?.ToString(Properties.ExcelResource.ExcelFormatDate);
                 workSheet.Cells[i + 4, 6].Value = e.PositionName;
-                workSheet.Cells[i + 4, 7].Value = e.DepartmentId;
+                workSheet.Cells[i + 4, 7].Value = e.DepartmentName;
                 workSheet.Cells[i + 4, 8].Value = e.BankAccountNumber;
                 workSheet.Cells[i + 4, 9].Value = e.BankName;
 
@@ -106,6 +106,64 @@ namespace MISA.AMIS.Core.Service
             package.Save();
             stream.Position = 0;
             return package.Stream;
+        }
+
+        public Employee GetDuplicateEmployee(Guid id)
+        {
+            var employee = _employeeRepository.GetById(id);
+            var employeeCode = GetEmployeeCodeMax();
+            employee.EmployeeCode = employeeCode;
+
+            return employee;
+        }
+
+        /// <summary>
+        /// Lấy ra EmployeeCode lớn nhất trong DB
+        /// </summary>
+        /// <returns>EmployeeCode</returns>
+        /// Created By: NXCHIEN 09/05/2021
+        public string GetEmployeeCodeMax()
+        {
+            string codeMax = _employeeRepository.GetEmployeeCodeMax();
+            string keyChar = string.Empty;
+            string numberChar = string.Empty;
+
+            if (codeMax == null)
+            {
+                return "NV-00001";
+            }
+
+            // Tách chữ và số ra hai mảng
+            for (int i = 0; i < codeMax.Length; i++)
+            {
+                if (Char.IsDigit(codeMax[i]))
+                {
+                    numberChar += codeMax[i];
+                }
+                else
+                {
+                    keyChar += codeMax[i];
+                }
+            }
+
+            // Tăng code lên 1 đơn vị
+            // NV-00001         valueCode = 2   l = 5-1=4   result = NV-00002
+            // NV-09             valueCode = 10   l =2-2=0   result = NV-10
+            int valueCode = int.Parse(numberChar) + 1;
+
+            int l = numberChar.Length - valueCode.ToString().Length;
+            var result = keyChar;
+            if(l > 0)
+            {
+                for (int i = 0; i < l; i++)
+                {
+                    result += "0";
+                }
+            }
+
+            result += valueCode.ToString();
+
+            return result;
         }
 
         /// <summary>
@@ -138,7 +196,7 @@ namespace MISA.AMIS.Core.Service
             // Khởi tạo giá trị
             var employeeCode = entity.EmployeeCode;
             var employeeId = entity.EmployeeId;
-            var checkCodeExist = _employeeRepository.CheckEmployeeAttributeExist("EmployeeCode", employeeId, http, employeeCode);
+            var checkCodeExist = _employeeRepository.CheckEmployeeAttributeExist(Properties.AttributeResource.EmployeeCode, employeeId, http, employeeCode);
             // Kiểm tra trùng hay không
             if (checkCodeExist)
             {
@@ -149,7 +207,7 @@ namespace MISA.AMIS.Core.Service
             //Check trùng IDentifyNumber
             // Khởi tạo giá trị
             var identifyNumber = entity.IdentifyNumber;
-            var checkIdentifyNumberExist = _employeeRepository.CheckEmployeeAttributeExist("IdentifyNumber", employeeId, http, identifyNumber);
+            var checkIdentifyNumberExist = _employeeRepository.CheckEmployeeAttributeExist(Properties.AttributeResource.IdentifyNumber, employeeId, http, identifyNumber);
             // Kiểm tra trùng hay không
             if (checkIdentifyNumberExist)
             {
@@ -159,7 +217,7 @@ namespace MISA.AMIS.Core.Service
             // Check trùng số điện thoại
             // Khởi tạo giá trị
             var phoneNumber = entity.PhoneNumber;
-            var checkphoneNumberExist = _employeeRepository.CheckEmployeeAttributeExist("PhoneNumber", employeeId, http, phoneNumber);
+            var checkphoneNumberExist = _employeeRepository.CheckEmployeeAttributeExist(Properties.AttributeResource.PhoneNumber, employeeId, http, phoneNumber);
             // Kiểm tra trùng hay không
             if (checkphoneNumberExist)
             {
@@ -168,23 +226,10 @@ namespace MISA.AMIS.Core.Service
 
             //Check trùng Email
             var email = entity.Email;
-            var checkEmailExist = _employeeRepository.CheckEmployeeAttributeExist("Email", employeeId, http, email);
+            var checkEmailExist = _employeeRepository.CheckEmployeeAttributeExist(Properties.AttributeResource.Email, employeeId, http, email);
             if (checkEmailExist)
             {
                 throw new EmployeeExceptions(Properties.Resources.Msg_Email_Exist);
-            }
-
-            //Check null DateOfBirth
-            // Nếu null thì gán giá trị mặc định 01/01/1970
-            var dateOfBirth = entity.DateOfBirth;
-            var dateOfIN = entity.DateOfIN;
-            if(dateOfBirth == null)
-            {
-                entity.DateOfBirth = DateTime.Parse("01/01/1970", new CultureInfo("en-US", true));
-            }
-            if(dateOfIN == null)
-            {
-                entity.DateOfIN = DateTime.Parse("01/01/1970", new CultureInfo("en-US", true));
             }
         }
     }

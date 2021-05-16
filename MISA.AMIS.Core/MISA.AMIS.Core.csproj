@@ -5,10 +5,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--<PackageReference Include="DotNetOpenAuth.OpenId.Core" Version="4.3.4.13329" />-->
     <PackageReference Include="EPPlus" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Properties\AttributeResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AttributeResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\ExcelResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExcelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\GenderResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GenderResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -17,6 +33,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Properties\AttributeResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AttributeResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\ExcelResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExcelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\GenderResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GenderResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
